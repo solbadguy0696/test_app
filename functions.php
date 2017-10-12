@@ -22,7 +22,10 @@ function checkReferer() {
 
 function transition($path) {
   $data = $_POST;
-  if ($path === '/new.php') {
+  if ($path === '/index.php' && $data['type'] === 'delete') {
+    deleteData($data['id']);
+    return 'index';
+  } else if ($path === '/new.php') {
     create($data);
   } else if ($path === '/edit.php') {
     update($data);
@@ -32,5 +35,9 @@ function transition($path) {
 // 詳細の取得
 function detail($id) {
   return getSelectData($id);
+}
+
+function deleteData($id) {
+  deleteDb($id);
 }
 ?>
