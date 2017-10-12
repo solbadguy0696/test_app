@@ -26,7 +26,7 @@ function selectAll() {
 // 詳細取得
 function getSelectData($id) {
   $dbh = connectPdo();
-  $sql = 'SELECT todo FROM todos WHERE id = :id AND deleted_at IS NULL'
+  $sql = 'SELECT todo FROM todos WHERE id = :id AND deleted_at IS NULL';
   $stmt = $dbh->prepare($sql);
   $stmt->execute(array(':id' => (int)$id));
   $data = $stmt->fetch();
