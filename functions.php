@@ -51,9 +51,13 @@ function checkReferer() {
 }
 
 function transition($path) {
+  unsetSession();
   $data = $_POST;
+  if(isset($data['todo'])) $res = validate($data['todo']);
   if ($path === '/index.php' && $data['type'] === 'delete') {
     deleteData($data['id']);
+    return 'index';
+  } else if (!$res || empty($_SESSION['err'])) {
     return 'index';
   } else if ($path === '/new.php') {
     create($data);
@@ -69,5 +73,9 @@ function detail($id) {
 
 function deleteData($id) {
   deleteDb($id);
+}
+
+function validate($data) {
+  return $res = $data != "" ? true : $_SESSION['err'] = '入力がありません';
 }
 ?>
