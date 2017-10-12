@@ -57,8 +57,8 @@ function transition($path) {
   if ($path === '/index.php' && $data['type'] === 'delete') {
     deleteData($data['id']);
     return 'index';
-  } else if (!$res || empty($_SESSION['err'])) {
-    return 'index';
+  } else if (!$res || !empty($_SESSION['err'])) {
+    return 'back';
   } else if ($path === '/new.php') {
     create($data);
   } else if ($path === '/edit.php') {
