@@ -11,4 +11,13 @@ function connectPdo() {
     exit;
   }
 }
+
+// 作成処理
+function insertDb($data) {
+  $dbh = connectPdo();  //DBへの接続
+  $sql = 'INSERT INTO todos (todo) VALUES (:todo)';  //SQL文の作成、:todoは$stmt->bindParam()で渡ってきたデータを渡すための記述
+  $stmt = $dbh->prepare($sql);
+  $stmt->bindParam(':todo', $data, PDO::PARAM_STR);
+  $stmt->execute();
+}
 ?>
