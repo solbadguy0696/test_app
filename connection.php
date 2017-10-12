@@ -23,12 +23,22 @@ function selectAll() {
   return $todo;
 }
 
-// 作成処理
+// 新規作成
 function insertDb($data) {
-  $dbh = connectPdo();  //DBへの接続
+  $dbh = connectPdo();  // データベースへの接続
   $sql = 'INSERT INTO todos (todo) VALUES (:todo)';  //SQL文の作成、:todoは$stmt->bindParam()で渡ってきたデータを渡すための記述
   $stmt = $dbh->prepare($sql);
   $stmt->bindParam(':todo', $data, PDO::PARAM_STR);
   $stmt->execute();
+}
+
+// 更新処理
+function updateDb($id, $data) {
+  $dbh = connectPdo();  // データベースへの接続
+  $sql = 'UPDATE todos SET todo = :todo WHERE id = :id';
+  $stmt = $dbh->prepare($sql);
+  $stmt->bindParam(':todo', $data, PDO::PARAM_STR);  // (対象となる文字列、保存したい値、PODで保存対象データの型を明示的に指定する
+  $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+  $stmt->execute();  //SQLを実行
 }
 ?>
