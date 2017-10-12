@@ -51,4 +51,15 @@ function updateDb($id, $data) {
   $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
   $stmt->execute();  //SQLを実行
 }
+
+// 削除処理：論理削除
+function deleteDb($id) {
+  $dbh = connectPdo();
+  $nowTime = date("Y-m-d H:i:s");  //日付を取得し、変数に代入する
+  $sql = 'UPDATE todos SET deleted_at = :deleted_at WHERE id = :id';
+  $stmt = $dbh->prepare($sql);
+  $stmt->bindParam(':deleted_at', $nowTime);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+}
 ?>
