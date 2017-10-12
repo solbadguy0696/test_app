@@ -15,6 +15,20 @@ function update($data) {
   updateDb($data['id'], $data['todo']);
 }
 
+function checkReferer() {
+  $httpArr = parse_url($_SERVER['HTTP_REFERER']);
+  return $res = transition($httpArr['path']);
+}
+
+function transition($path) {
+  $data = $_POST;
+  if ($path === '/new.php') {
+    create($data);
+  } else if ($path === '/edit.php') {
+    update($data);
+  }
+}
+
 // 詳細の取得
 function detail($id) {
   return getSelectData($id);
