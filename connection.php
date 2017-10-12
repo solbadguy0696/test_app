@@ -23,6 +23,16 @@ function selectAll() {
   return $todo;
 }
 
+// 詳細取得
+function getSelectData($id) {
+  $dbh = connectPdo();
+  $sql = 'SELECT todo FROM todos WHERE id = :id AND deleted_at IS NULL'
+  $stmt = $dbh->prepare($sql);
+  $stmt->execute(array(':id' => (int)$id));
+  $data = $stmt->fetch();
+  return $data['todo'];
+}
+
 // 新規作成
 function insertDb($data) {
   $dbh = connectPdo();  // データベースへの接続
